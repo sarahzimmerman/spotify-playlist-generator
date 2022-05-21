@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Demo: REWIND</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{{ url_for('static', filename='/img/record_player.png') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+
+    </head>
+
+    <body>
+
+    <main role="main" class="container extra-bottom">
+      <h1 class="mt-5">REWIND Demo App</h1>
+      <p><mark>Listen then and now.</mark></p>
+    </main>
+
+    <!-- <h1><a href="chart1">Fruit in North America</a></h1> -->
+    <!-- <h1>HIIIIIII</h1> -->
+    <!-- <h1><a href="chart2">Vegetables in Europe</a></h1> -->
+    
+
+    <div class="container">    
+        
+        <!-- Button trigger modal -->
+
+        <div style="text-align: left;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#search_modal" data-source="Search artist" >Search by Artist Name</button>
+        </div>
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#add_artist_task_modal" data-source="Add artist">Add Artist</button>
+        </div>
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#add_song_task_modal" data-source="Add song">Add a Song</button>
+        </div>
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#playlist_modal" data-source="Make playlist">Make a Playlist</button>
+        </div>
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#plot_modal" data-source="Make playlist plot">Make a Scatterplot</button>
+        </div>
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='/above_avg'" id="above_avg" data-source="Above avg">Show Playlists with Above Average Playtime</button>
+        </div>
+        <div style="text-align: left;">
+        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='/stored_procedure'" id="stored_procedure" data-source="Above avg">Stored Procedure</button>
+        </div>
+        
+        
+                    
+        <div class="modal fade" id="add_artist_task_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Add an artist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Name</span>
+                        <input type="text" class="form-control" id="add_modal_artist_name" placeholder="Name of Artist" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Followers</span>
+                        <input type="number" class="form-control" id="add_modal_artist_followers" placeholder="Number of Followers" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Image</span>
+                        <input type="text" class="form-control" id="add_modal_artist_image" placeholder="Image URL" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Popularity Rating</span>
+                        <input type="number" class="form-control" id="add_modal_artist_popularity" placeholder="Rating from 1-100" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="save_changes_add_artist" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="add_song_task_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Add a song</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Name</span>
+                        <input type="text" class="form-control" id="add_modal_song_name" placeholder="Name of Song" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Genre</span>
+                        <input type="text" class="form-control" id="add_modal_song_genre" placeholder="Genre of Song" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Popularity Rating</span>
+                        <input type="number" class="form-control" id="add_modal_song_popularity" placeholder="Rating from 1-100" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Duration</span>
+                        <input type="number" step="0.01" class="form-control" id="add_modal_song_duration" placeholder="Length of the Song in Seconds" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="save_changes_add_song" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="edit_task_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Edit an artist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Popularity Rating</span>
+                        <input type="number" class="form-control" id="edit_modal_popularity" placeholder="Rating from 1-100" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="save_changes_edit" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div> 
+        </div>
+
+        <div class="modal fade" id="plot_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Create Plot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Genre</span>
+                        <input type="text" class="form-control" id="search-by-genre" placeholder="ex. 'Pop'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Start Year</span>
+                        <input type="number" class="form-control" id="search-by-start-year" placeholder="ex. '1980'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">End Year</span>
+                        <input type="number" class="form-control" id="search-by-end-year" placeholder="ex. '1990'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="generate_new_plot" type="button" class="btn btn-primary">Generate</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="playlist_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Create Playlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Genre</span>
+                        <input type="text" class="form-control" id="search-by-genre-playlist" placeholder="ex. 'Pop'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Start Year</span>
+                        <input type="number" class="form-control" id="search-by-start-year-playlist" placeholder="ex. '1980'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">End Year</span>
+                        <input type="number" class="form-control" id="search-by-end-year-playlist" placeholder="ex. '1990'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="generate_new_playlist" type="button" class="btn btn-primary">Generate!!</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="search_modal" tabindex="-1" aria-labelledby="Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Label">Search by name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="task-form-display">Name</span>
+                        <input type="text" class="form-control" id="search-by-artist-name" placeholder="ex. 'Taylor Swift'" aria-label="task-name" aria-describedby="basic-addon1" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="search_artist" type="button" class="btn btn-primary">Search</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--Artist Table-->
+    <div class="container table-responsive">          
+    <table class="table" style="width:device-width">
+        <thead>
+        <tr>
+            <th class="artist-id">Artist ID</th>
+            <th class="name">Name</th>
+            <th class="followers">Followers</th>
+            <th class="image">Image</th>
+            <th class="popularity">Popularity</th>
+            <th class="edit">Edit</th>
+            <th class="remove">Remove</th>
+        </tr>
+        </thead>
+
+        
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{item.artistID}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.followers}}</td>
+                <td><img src={{item.image}} style="width:90px;height:auto;"> </td>
+                <td>{{item.popularityRating}}</td>
+
+                <td><button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#edit_task_modal" data-source="{{item.artistID}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
+
+                <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{item.artistID}}" type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>
+            </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+    </div>
+
+
+
+    <footer class="footer">
+      <div class="container">
+            <p class="text-muted"><small>App developed for CS411 UIUC</small></p>
+      </div>
+    </footer>
+  </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+
+</html>

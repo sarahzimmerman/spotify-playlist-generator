@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+<main role="main" class="container extra-bottom">
+    <h1 class="mt-5">{{header}}</h1>
+    <p><mark>{{description}}</mark></p>
+</main>
+<body style="font-family:arial, sans-serif">
+    <!-- <h6><a href="/">Return to index page</a></h6> -->
+    <div class="container">
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm" onclick="document.location='/'" id="above_avg" data-source="Above avg">Go Back</button>
+        </div>
+    </div>
+    <div id="chart" class="chart"></div>
+    <!-- <div></div> -->
+</body>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript">
+    var graphs = {{graphJSON | safe}};
+    Plotly.plot('chart',graphs,{});        
+</script>
+
+</html>
